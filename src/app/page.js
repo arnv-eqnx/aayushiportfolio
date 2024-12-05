@@ -38,117 +38,127 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    gsap.fromTo(
-      titleName.current,
-      { y: -100, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, ease: "power2.inOut" }
-    );
+    if (isClient) {
+      gsap.fromTo(
+        titleName.current,
+        { y: -100, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: "power2.inOut" }
+      );
 
-    gsap.fromTo(
-      taglineRef.current,
-      { y: 200, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.5, ease: "power2.out" }
-    );
+      gsap.fromTo(
+        taglineRef.current,
+        { y: 200, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.5, ease: "power2.out" }
+      );
 
-    gsap.fromTo(
-      heroImgRef.current,
-      { y: 200, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.5, ease: "power2.out", delay: 1 }
-    );
+      gsap.fromTo(
+        heroImgRef.current,
+        { y: 200, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.5, ease: "power2.out", delay: 1 }
+      );
 
-    gsap.fromTo(
-      heroNavRef.current,
-      { y: 200, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, ease: "power2.inOut", delay: 1.5 }
-    );
+      gsap.fromTo(
+        heroNavRef.current,
+        { y: 200, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: "power2.inOut", delay: 1.5 }
+      );
 
-    gsap.fromTo(
-      currentStatusRef.current,
-      { y: 200, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.2, ease: "power2.inOut", delay: 1.5 }
-    );
+      gsap.fromTo(
+        currentStatusRef.current,
+        { y: 200, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, ease: "power2.inOut", delay: 1.5 }
+      );
 
-    gsap.fromTo(
-      contactMeRef.current,
-      { y: 200, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, ease: "power2.inOut", delay: 2.5 }
-    );
+      gsap.fromTo(
+        contactMeRef.current,
+        { y: 200, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, ease: "power2.inOut", delay: 2.5 }
+      );
 
-    gsap.fromTo(
-      viewResumeRef.current,
-      { y: 200, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, ease: "power2.inOut", delay: 2 }
-    );
+      gsap.fromTo(
+        viewResumeRef.current,
+        { y: 200, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: "power2.inOut", delay: 2 }
+      );
+    }
   }, [isLoading]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > window.innerHeight) {
-        setIsNavbarVisible(true); // Show the navbar after the first section
-      } else {
-        setIsNavbarVisible(false); // Hide the navbar when on the first section
-      }
-    };
+    if (isClient) {
+      const handleScroll = () => {
+        if (window.scrollY > window.innerHeight) {
+          setIsNavbarVisible(true); // Show the navbar after the first section
+        } else {
+          setIsNavbarVisible(false); // Hide the navbar when on the first section
+        }
+      };
 
-    window.addEventListener("scroll", handleScroll);
+      window.addEventListener("scroll", handleScroll);
 
-    // Cleanup on unmount
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+      // Cleanup on unmount
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
   }, []);
 
-  const lenis = new Lenis();
-  lenis.on("scroll", (e) => {
-    console.log();
-  });
-  function raf(time) {
-    lenis.raf(time);
+  if (isClient) {
+    const lenis = new Lenis();
+    lenis.on("scroll", (e) => {
+      console.log();
+    });
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
     requestAnimationFrame(raf);
   }
-  requestAnimationFrame(raf);
 
   gsap.registerPlugin(ScrollTrigger);
   useEffect(() => {
-    const splitTypes = document.querySelectorAll(".revealType");
-    splitTypes.forEach((char, i) => {
-      const text = new SplitType(char, {
-        types: "words",
+    if (isClient) {
+      const splitTypes = document.querySelectorAll(".revealType");
+      splitTypes.forEach((char, i) => {
+        const text = new SplitType(char, {
+          types: "words",
+        });
+        gsap.from(text.words, {
+          scrollTrigger: {
+            trigger: char,
+            start: "top 90%",
+            end: "top 50%",
+            scrub: true,
+            markers: false,
+          },
+          opacity: 0.2,
+          stagger: 0.2,
+        });
       });
-      gsap.from(text.words, {
-        scrollTrigger: {
-          trigger: char,
-          start: "top 90%",
-          end: "top 50%",
-          scrub: true,
-          markers: false,
-        },
-        opacity: 0.2,
-        stagger: 0.2,
-      });
-    });
+    }
   }, [isLoading]);
 
   useEffect(() => {
-    const container = document.querySelector(".aboutMeCardsContainer"); //container
-    const cards = gsap.utils.toArray(".card"); //sections
-    console.log(cards);
+    if (isClient) {
+      const container = document.querySelector(".aboutMeCardsContainer"); //container
+      const cards = gsap.utils.toArray(".card"); //sections
+      console.log(cards);
 
-    gsap.to(cards, {
-      xPercent: -100 * (cards.length - 1),
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".aboutMeCardsContainer",
-        start: "top 55%",
-        scrub: 1,
-        end: "+=" + 100 * (cards.length - 1),
-        // markers: true,
-        // pin: true,
-      },
-    });
-    return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
-    };
+      gsap.to(cards, {
+        xPercent: -100 * (cards.length - 1),
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".aboutMeCardsContainer",
+          start: "top 55%",
+          scrub: 1,
+          end: "+=" + 100 * (cards.length - 1),
+          // markers: true,
+          // pin: true,
+        },
+      });
+      return () => {
+        ScrollTrigger.getAll().forEach((st) => st.kill());
+      };
+    }
   }, [isLoading]);
 
   const landingPageCardsLayout = (
