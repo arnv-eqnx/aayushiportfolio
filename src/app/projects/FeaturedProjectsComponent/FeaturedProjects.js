@@ -18,7 +18,7 @@ export default function FeaturedProjects() {
           <p className="mt-4">
             This project leverages the A* algorithm to address route
             optimization challenges in various domains. By implementing and
-            evaluating the algorithm's performance, the project aims to provide
+            evaluating the algorithms performance, the project aims to provide
             practical solutions for real-world route planning problems.
           </p>
         </div>
@@ -43,7 +43,7 @@ export default function FeaturedProjects() {
         <div className="p-4">
           <h1 className="text-3xl font-bold mt-4">Google Stock Price.</h1>
           <p className="mt-4">
-            By predicting Google's stock price, this project aims to assist
+            By predicting Googles stock price, this project aims to assist
             investors and financial professionals in making informed decisions,
             managing risks, and potentially identifying trading opportunities in
             the stock market.
