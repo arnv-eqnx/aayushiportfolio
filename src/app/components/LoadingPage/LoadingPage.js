@@ -9,7 +9,7 @@ const LoadingPage = () => {
   const hbdTagline = useRef(null);
   const [count, setCount] = useState(0); // State for the counter
   const duration = 3000; // Total duration for the animation in milliseconds
-  const steps = 30; // Number of updates during the animation
+  const steps = 23; // Number of updates during the animation
   const intervalDelay = duration / steps; // Calculate interval delay
 
   useEffect(() => {
@@ -36,19 +36,21 @@ const LoadingPage = () => {
     return () => clearInterval(interval);
   }, []);
 
-  gsap.to(counterRef.current, {
-    duration: 0.5,
-    delay: 3.5,
-    opacity: 0,
-    ease: "power2.out",
-  });
+  useEffect(() => {
+    gsap.to(counterRef.current, {
+      duration: 1,
+      delay: 3.5,
+      opacity: 0,
+      ease: "power2.out",
+    });
 
-  gsap.to(hbdTagline.current, {
-    duration: 0.5,
-    delay: 3.5,
-    opacity: 0,
-    ease: "power2.out",
-  });
+    gsap.to(hbdTagline.current, {
+      duration: 1,
+      delay: 3.5,
+      opacity: 0,
+      ease: "power2.out",
+    });
+  }, []);
 
   return (
     <div className="h-[100vh] w-full flex flex-col items-center justify-center gap-4">
@@ -59,12 +61,12 @@ const LoadingPage = () => {
         <p>Loading</p>
         <p>{count}%</p>
       </div>
-      <div ref={hbdTagline} className=" text-4xl text-[#7cb9e8] flex items-center gap-4">
+      <div
+        ref={hbdTagline}
+        className=" text-4xl text-[#7cb9e8] flex items-center gap-4"
+      >
         <p className="text-white">Happy Birthday, Yushi</p>
-        <FaHeart
-          size={50}
-          className="text-red-50 text-2xl h-[50px] w-[50px]"
-        />
+        <FaHeart size={50} className="text-red-50 text-2xl h-[50px] w-[50px]" />
       </div>
     </div>
   );

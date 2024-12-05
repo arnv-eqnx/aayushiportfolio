@@ -1,4 +1,5 @@
 "use client";
+
 import Lottie from "lottie-react";
 import Image from "next/image";
 import heroImage from "src/assets/finalHero2NoBg.png";
@@ -102,17 +103,19 @@ export default function Home() {
     }
   }, []);
 
-  if (isClient) {
-    const lenis = new Lenis();
-    lenis.on("scroll", (e) => {
-      console.log();
-    });
-    function raf(time) {
-      lenis.raf(time);
+  useEffect(() => {
+    if (isClient) {
+      const lenis = new Lenis();
+      lenis.on("scroll", (e) => {
+        console.log();
+      });
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
       requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
-  }
+  }, []);
 
   gsap.registerPlugin(ScrollTrigger);
   useEffect(() => {
@@ -358,6 +361,10 @@ export default function Home() {
     </div>
   );
 
+  const featuredSection = (
+    <div className=" h-[100vh] w-full">hello from featured section</div>
+  );
+
   const skillsSection = (
     <div className=" h-screen border">
       <p className=" text-white">hello from skills</p>
@@ -380,6 +387,7 @@ export default function Home() {
       <p className=" text-5xl mt-4 text-[#7cb9e8]">Digging a little deeper.</p>
       {aboutCardsSection}
       {skillsSection}
+      {featuredSection}
     </div>
   );
 
