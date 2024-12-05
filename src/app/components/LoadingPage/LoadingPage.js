@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { FaHeart } from "react-icons/fa";
 
 const LoadingPage = () => {
+  const isClient = typeof window !== "undefined";
   const counterRef = useRef(null);
   const hbdTagline = useRef(null);
   const [count, setCount] = useState(0); // State for the counter
@@ -13,43 +14,47 @@ const LoadingPage = () => {
   const intervalDelay = duration / steps; // Calculate interval delay
 
   useEffect(() => {
-    let elapsedSteps = 0;
+    if (isClient) {
+      let elapsedSteps = 0;
 
-    const interval = setInterval(() => {
-      elapsedSteps++;
-      if (elapsedSteps >= steps) {
-        clearInterval(interval);
-        setCount(100); // Ensure final value is 100
-        return;
-      }
+      const interval = setInterval(() => {
+        elapsedSteps++;
+        if (elapsedSteps >= steps) {
+          clearInterval(interval);
+          setCount(100); // Ensure final value is 100
+          return;
+        }
 
-      // Generate a random number between the current count and 100
-      setCount((prev) => {
-        const remainingSteps = steps - elapsedSteps;
-        const maxIncrement = Math.ceil((100 - prev) / remainingSteps);
-        const randomIncrement = Math.floor(Math.random() * maxIncrement + 1);
-        return Math.min(prev + randomIncrement, 100);
-      });
-    }, intervalDelay);
+        // Generate a random number between the current count and 100
+        setCount((prev) => {
+          const remainingSteps = steps - elapsedSteps;
+          const maxIncrement = Math.ceil((100 - prev) / remainingSteps);
+          const randomIncrement = Math.floor(Math.random() * maxIncrement + 1);
+          return Math.min(prev + randomIncrement, 100);
+        });
+      }, intervalDelay);
 
-    // Cleanup interval on component unmount
-    return () => clearInterval(interval);
+      // Cleanup interval on component unmount
+      return () => clearInterval(interval);
+    }
   }, []);
 
   useEffect(() => {
-    gsap.to(counterRef.current, {
-      duration: 1,
-      delay: 3.5,
-      opacity: 0,
-      ease: "power2.out",
-    });
+    if (isClient) {
+      gsap.to(counterRef.current, {
+        duration: 1,
+        delay: 3.5,
+        opacity: 0,
+        ease: "power2.out",
+      });
 
-    gsap.to(hbdTagline.current, {
-      duration: 1,
-      delay: 3.5,
-      opacity: 0,
-      ease: "power2.out",
-    });
+      gsap.to(hbdTagline.current, {
+        duration: 1,
+        delay: 3.5,
+        opacity: 0,
+        ease: "power2.out",
+      });
+    }
   }, []);
 
   return (
